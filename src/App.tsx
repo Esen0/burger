@@ -7,8 +7,13 @@ import './App.css';
 
 const BASE_PRICE = 30;
 
+interface IngredientCount {
+  name: string;
+  count: number;
+}
+
 const App: React.FC = () => {
-  const [ingredients, setIngredients] = useState(
+  const [ingredients, setIngredients] = useState<IngredientCount[]>(
     INGREDIENTS.map(ingredient => ({ name: ingredient.name, count: 0 }))
   );
 
@@ -48,6 +53,7 @@ const App: React.FC = () => {
             key={ingredient.name}
             ingredient={ingredient}
             onAdd={() => addIngredient(ingredient.name)}
+            onRemove={() => removeIngredient(ingredient.name)}
           />
         ))}
       </div>

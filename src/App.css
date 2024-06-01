@@ -1,42 +1,68 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.app {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ingredient-button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.ingredient-button img {
+  width: 30px;
+  height: 30px;
 }
 
-.card {
-  padding: 2em;
+.burger {
+  border: 2px solid #000;
+  padding: 20px;
+  display: inline-block;
 }
 
-.read-the-docs {
-  color: #888;
+.burger-top, .burger-bottom {
+  background-color: #FFD700;
+  padding: 10px;
+}
+
+.burger-ingredient {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ingredient {
+  padding: 5px;
+  margin: 2px;
+}
+
+.ingredient.meat {
+  background-color: #8B4513;
+}
+
+.ingredient.cheese {
+  background-color: #FFD700;
+}
+
+.ingredient.salad {
+  background-color: #7CFC00;
+}
+
+.ingredient.bacon {
+  background-color: #FF6347;
+}
+
+.reset-button {
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #FF6347;
+  color: #FFF;
 }
