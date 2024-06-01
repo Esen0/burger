@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import IngredientButton from './components/IngredientButton';
+import Burger from './components/Burger/burger';
+import ResetButton from './components/ResetButton/ResetButton';
+import { INGREDIENTS } from './ingredients';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const BASE_PRICE = 30;
+
+const App: React.FC = () => {
+  const [ingredients, setIngredients] = useState(
+    INGREDIENTS.map(ingredient => ({ name: ingredient.name, count: 0 }))
+  );
+
+  const addIngredient = (name: string) => {
+    setIngredients(ingredients.map(ingredient => 
+      ingredient.name === name 
+        ? { ...ingredient, count: ingredient.count + 1 }
+        : ingredient
+    ));
+  };
+
+  const removeIngredient = (name: string) => {
+    setIngredients(ingredients.map(ingredient => 
+      ingredient.name === name && ingredient.count > 0
+        ? { ...ingredient, count: ingredient.count - 1 }
+        : ingredient
+    ));
+  };
+
+  const resetIngredients = () => {
+    setIngredients(ingredients.map(ingredient => ({ ...ingredient, count: 0 })));
+  };
+
+  const calculateTotalPrice = () => {
+    return BASE_PRICE + ingredients.reduce((total, ingredient) => {
+      const ingredientDetails = INGREDIENTS.find(i => i.name === ingredient.name);
+      return total + (ingredientDetails ? ingredientDetails.price * ingredient.count : 0);
+    }, 0);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <h1>Burger Constructor</h1>
+      <div className="controls">
+        {INGREDIENTS.map(ingredient => (
+          <IngredientButton
+            key={ingredient.name}
+            ingredient={ingredient}
+            onAdd={() => addIngredient(ingredient.name)}
+          />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <Burger ingredients={ingredients} />
+      <div className="total-price">Total Price: {calculateTotalPrice()} сом</div>
+      <ResetButton onReset={resetIngredients} />
+    </div>
+  );
+};
 
-export default App
+export default App;
